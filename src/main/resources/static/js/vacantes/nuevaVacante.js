@@ -1,0 +1,56 @@
+document.addEventListener("DOMContentLoaded", ()=>{
+    //Selectores
+    const formNuevaVacante = document.querySelector("#formNuevaVacante");
+
+    //Eventos
+    formNuevaVacante.addEventListener("submit", requestSaveNuevaVacante);
+
+    //Funciones
+    function requestSaveNuevaVacante(e){
+        e.preventDefault();
+
+        let skillSeleccionadas = "";
+        document.querySelectorAll("input[name='skills']:checked").forEach((check, index, array) => {
+            skillSeleccionadas += check.value + (index < array.length -1 ? "," : "")
+        });
+        const inputTitulo = document.querySelector("#titulo").value;
+        const inputEmpresa = document.querySelector("#empresa").value;
+        const inputUbicacion = document.querySelector("#ubicacion").value;
+        const inputSalario = document.querySelector("#salario").value;
+        const inputContrato = document.querySelector("#contrato").value;
+        const inputDescripcion = document.querySelector("#x").value;
+
+        const requestBody = {
+            titulo: inputTitulo,
+            empresa: inputEmpresa,
+            ubicacion: inputUbicacion,
+            salario: inputSalario,
+            contrato: inputContrato,
+            descripcion: inputDescripcion,
+            skills: skillSeleccionadas
+        }
+
+        fetch("/vacante/save-vacante", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody)
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.msg){
+                Swal.fire({
+                    title: "¡Exito!",
+                    icon: "success",
+                    text: "Vacante creada de manera correcta",
+                    timer: 3000,
+                    showConfirmButton: false,
+                })
+            }
+        }).catch((error) => {
+            console.log("Error en peticion de guardado");
+            console.log(error.message);
+        })
+    }
+})

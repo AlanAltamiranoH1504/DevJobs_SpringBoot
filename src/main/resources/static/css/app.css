@@ -515,3 +515,37 @@ p.candidatos {
     color: white;
     font-size: 1.8rem;
 }
+
+/*Estilos checkbox tecnologias*/
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 800px;
+    background-color: #1e1e2f; /* Fondo oscuro */
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    background-color: #2a2a3d; /* Fondo más claro para cada item */
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    color: #ffffff; /* Texto blanco */
+    font-family: Arial, sans-serif;
+}
+
+.checkbox-item:hover {
+    background-color: #3a3a50;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #00bfff; /* Celeste */
+    transform: scale(1.2);
+    cursor: pointer;
+}

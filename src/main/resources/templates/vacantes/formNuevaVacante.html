@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Fuente Rubik de Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+    <!--Hoja CSS-->
+    <link rel="stylesheet" href="/css/app.css">
+    <!--Archivos de Trix-->
+    <link rel="stylesheet" href="/css/trix.css">
+    <!--Sweet Alert 2-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <title th:text='${nombrePagina}'></title>
+</head>
+<body>
+<div class="nombre-sitio contenedor">
+    <h1>
+        <a th:href="@{/}">DevJobs</a>
+    </h1>
+
+    <div th:if="barra" class="buscador">
+        <form method="post" action="#">
+            <input type="text" class="buscar" placeholder="Vacante a buscar">
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+</div>
+
+<header class="header site-header contenedor separador">
+    <h2 th:text="${nombrePagina}"></h2>
+
+    <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
+
+</header>
+
+<div class="contenido-principal contenedor">
+    <main class="contenedor">
+        <form action="" method="post" class="default-form" id="formNuevaVacante">
+            <h3>Información General de la Vacante</h3>
+<!--            <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+            <div class="campo">
+                <label for="titulo">Titulo</label>
+                <input type="text" name="titulo" id="titulo" placeholder="Titulo de la vacante">
+            </div>
+            <div class="campo">
+                <label for="empresa">Empresa</label>
+                <input type="text" name="empresa" id="empresa" placeholder="Empresa reclutadora">
+            </div>
+            <div class="campo">
+                <label for="ubicacion">Ubicación</label>
+                <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación de vacante">
+            </div>
+            <div class="campo">
+                <label for="salario">Salario (MX)</label>
+                <input type="text" id="salario" name="salario" placeholder="Salario de vacante">
+            </div>
+            <div class="campo">
+                <label for="contrato">Contrato</label>
+                <select id="contrato" name="contrato">
+                    <option value="">-- Selecciona una Opción --</option>
+                    <option value="freelance">Freelance</option>
+                    <option value="completo">Tiempo Completo</option>
+                    <option value="medio">Medio Tiempo</option>
+                    <option value="proyecto">Por Proyecto</option>
+                </select>
+            </div>
+            <h3>Descripción del Puesto</h3>
+            <div class="campo descripcion">
+                <label>Descripción del Puesto</label>
+                <input type="hidden" id="x" name="descripcion">
+                <trix-editor input="x"></trix-editor>
+            </div>
+            <h3>Conocimientos</h3>
+            <div class="campo descripcion">
+                <label>Conocimientos Deseados</label>
+            </div>
+            <div class="checkbox-container">
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="html">
+                    HTML 5
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="css3">
+                    CSS 3
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="css-grid">
+                    CSS GRID
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="flexbox">
+                    FLEXBOX
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="javascript">
+                    JavaScript
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="jquery">
+                    JQUERY
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="vuejs">
+                    VueJs
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="reactjs">
+                    ReactJS
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="redux">
+                    AJAX
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="typeScript">
+                    TypeScript
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="php">
+                    PHP
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="laravel">
+                    Laravel
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="symfony">
+                    Symfony
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="python">
+                    Python
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="django">
+                    Django
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="django">
+                    Java
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="django">
+                    Spring B.
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="django">
+                    Node Js
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="django">
+                    Express
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="orm">
+                    ORM
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="sequelize">
+                    Sequelize
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="mongoose">
+                    Mongoose
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="sql">
+                    SQL
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="mvc">
+                    MVC
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="sass">
+                    SASS
+                </label>
+
+                <label class="checkbox-item">
+                    <input type="checkbox" name="skills" value="wordpress">
+                    WordPress
+                </label>
+            </div>
+            <div class="campo centrar-horizontal">
+                <input type="submit" value="Agregar Vacante" class="btn btn-azul">
+            </div>
+        </form>
+    </main>
+</div>
+
+<!-- Archivos de Trix -->
+<script src="/js/trix.js"></script>
+<script src="/js/vacantes/nuevaVacante.js"></script>
+<!--Sweet Alert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
