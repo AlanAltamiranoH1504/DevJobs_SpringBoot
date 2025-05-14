@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Fuente Rubik de Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <!--Hoja CSS-->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <title th:text='${nombrePagina}'></title>
+</head>
+<body>
+    <div class="nombre-sitio contenedor">
+        <h1>
+            <a th:href="@{/}">DevJobs</a>
+        </h1>
+
+        <div th:if="barra" class="buscador">
+            <form method="post" action="#">
+                <input type="text" class="buscar" placeholder="Vacante a buscar">
+                <input type="submit" value="Buscar">
+            </form>
+        </div>
+    </div>
+
+    <header class="header site-header contenedor separador">
+        <h2 th:text="${nombrePagina}"></h2>
+
+        <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
+
+        <a th:if="boton" th:href="@{/vacantes/nueva}" class="btn btn-azul">Publicar Nueva Vacante</a>
+    </header>
+
+    <div class="contenido-principal contenedor">
+        <div th:include="home:: body">
+
+        </div>
+    </div>
+</body>
+</html>
