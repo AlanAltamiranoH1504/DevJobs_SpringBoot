@@ -2,6 +2,7 @@ package altamirano.hernandez.devjobs_springboot.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class Vacante {
     private List<Candidato> candidatos;
 
     //Relacion ManyToMany - Una vacante puede tener varias skill
+    @NotEmpty(message = "Las skills son obligatorias")
     @ManyToMany
     @JoinTable(
             name = "vacantes_skills",

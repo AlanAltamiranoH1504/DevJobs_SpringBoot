@@ -52,7 +52,28 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     text: "Vacante creada de manera correcta",
                     timer: 3000,
                     showConfirmButton: false,
-                })
+                });
+            } else{
+                const erroresArray = Object.values(data);
+                const divAlertas = document.querySelector("#alertas");
+                divAlertas.innerHTML = "";
+
+                Swal.fire({
+                    title: "¡Error!",
+                    icon: "error",
+                    text: "Error en creacion de vacante. Consulta errores en parte superior",
+                    timer: 7000,
+                    showConfirmButton: true
+                });
+                erroresArray.forEach((error) => {
+                    const parrafoError = document.createElement("p");
+                    parrafoError.classList.add("alertas_errores")
+                    parrafoError.textContent = error;
+                    divAlertas.appendChild(parrafoError);
+                });
+                setTimeout(() => {
+                    divAlertas.innerHTML = "";
+                }, 7000)
             }
         }).catch((error) => {
             console.log("Error en peticion de guardado");

@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.controllers.views;
 
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,4 +25,10 @@ public class vacanteControllerViews {
         return "vacantes/detallesVacante";
     }
 
+    @GetMapping("/edicion-vacante/{id}")
+    public String editarVacante(Model model, @PathVariable int id){
+        model.addAttribute("nombrePagina", "Edición de Vacante");
+        model.addAttribute("tagline", "Edita tu vacante");
+        return "vacantes/formEditarVacante";
+    }
 }

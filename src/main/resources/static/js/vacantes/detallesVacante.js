@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         switch (idBtn){
             case "editarVacante":
-                console.log("Editando vacante");
+                window.location.href = `/vacantes/edicion-vacante/${idEntidad}`
                 break;
             case "eliminarVacante":
                 eliminacionVacante(idEntidad);

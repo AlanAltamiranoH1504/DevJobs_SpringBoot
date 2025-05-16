@@ -549,3 +549,11 @@ p.candidatos {
     transform: scale(1.2);
     cursor: pointer;
 }
+
+.alertas_errores{
+    background: red;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    text-align: center;
+}
