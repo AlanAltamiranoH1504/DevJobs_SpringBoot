@@ -41,7 +41,7 @@ public class vacanteController {
         }
     }
 
-    @PostMapping("findById/{id}")
+    @PostMapping("/findById/{id}")
     public ResponseEntity<?> findVacanteById(@PathVariable int id){
         Map<String, Object> json = new HashMap<>();
         try{
@@ -52,6 +52,18 @@ public class vacanteController {
                 json.put("msg", "Vacante no encontrada");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(json);
             }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteVacanteById(@PathVariable int id){
+        Map<String, Object> json = new HashMap<>();
+        try{
+            iVacanteService.deleteById(id);
+            json.put("msg", "Vacante eliminada");
+            return ResponseEntity.status(HttpStatus.OK).body(json);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

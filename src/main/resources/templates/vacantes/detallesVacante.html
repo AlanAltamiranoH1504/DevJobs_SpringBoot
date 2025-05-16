@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Fuente Rubik de Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+    <!--Hoja CSS-->
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <title th:text='${nombrePagina}'></title>
+</head>
+<body>
+<div class="nombre-sitio contenedor">
+    <h1>
+        <a th:href="@{/}">DevJobs</a>
+    </h1>
+
+    <div th:if="barra" class="buscador">
+        <form method="post" action="#">
+            <input type="text" class="buscar" placeholder="Vacante a buscar">
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+</div>
+
+<header class="header site-header contenedor separador">
+    <h2 id="titulo" th:text="${nombrePagina}"></h2>
+
+    <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
+</header>
+
+<div class="contenido-superior vacante contenedor">
+    <div class="caja">
+        <p class="etiqueta">Empresa</p>
+        <p class="nombre" id="empresa"></p>
+    </div>
+
+    <div class="caja">
+        <p class="etiqueta">Ubicación</p>
+        <p class="nombre" id="ubicacion"></p>
+    </div>
+    <div class="caja">
+        <p class="etiqueta">Contrato</p>
+        <p class="nombre" id="contrato"></p>
+    </div>
+    <div class="caja">
+        <p class="etiqueta">Salario</p>
+        <p class="nombre" id="salario"></p>
+    </div>
+</div>
+
+<div class="vacante-contenedor contenedor">
+    <main class="contenido">
+        <h2>Descripcion del Puesto</h2>
+        <div class="vacante-descripcion" id="descripcion"></div>
+
+        <div id="seccionBtns">
+            <button type="button" id="editarVacante"  class="btn btn-azul editar-btn" style="margin-bottom: 15px">Editar Vacante</button>
+            <button type="button" id="eliminarVacante" class="btn btn-rojo">Eliminar Vacante</button>
+        </div>
+    </main>
+    <aside class="sidebar">
+        <h2>Conocimientos Deseados</h2>
+        <ul class="skills" id="listaDeSkills"></ul>
+    </aside>
+</div>
+<script src="/js/vacantes/detallesVacante.js"></script>
+<!--Sweet Alert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
