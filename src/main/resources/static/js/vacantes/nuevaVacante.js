@@ -10,8 +10,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
         e.preventDefault();
 
         let skillSeleccionadas = "";
+        let skillSeleccionados2 = [];
         document.querySelectorAll("input[name='skills']:checked").forEach((check, index, array) => {
             skillSeleccionadas += check.value + (index < array.length -1 ? "," : "")
+            const skill = {
+                id: check.getAttribute("data-id"),
+                nombre: check.value
+            }
+            skillSeleccionados2.push(skill);
         });
         const inputTitulo = document.querySelector("#titulo").value;
         const inputEmpresa = document.querySelector("#empresa").value;
@@ -27,7 +33,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             salario: inputSalario,
             contrato: inputContrato,
             descripcion: inputDescripcion,
-            skills: skillSeleccionadas
+            skills: skillSeleccionados2
         }
 
         fetch("/vacante/save-vacante", {

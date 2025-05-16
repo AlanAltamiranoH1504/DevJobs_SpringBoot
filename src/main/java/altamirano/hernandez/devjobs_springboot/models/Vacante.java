@@ -37,9 +37,6 @@ public class Vacante {
     @Size(min = 3, max = 500, message = "La descripcion tiene un maximo de 500 caracteres")
     private String descripcion;
 
-    @NotBlank(message = "Las skills son obligatorias")
-    private String skills;
-
     //Relacion ManyToMany: Una vacante puede tener varios candidatos
     @ManyToMany
     @JoinTable(
@@ -49,11 +46,20 @@ public class Vacante {
     )
     private List<Candidato> candidatos;
 
+    //Relacion ManyToMany - Una vacante puede tener varias skill
+    @ManyToMany
+    @JoinTable(
+            name = "vacantes_skills",
+            joinColumns = @JoinColumn(name = "vacante_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private List<Skill> skills;
+
     //Constructores
     public Vacante(){
 
     }
-    public Vacante(List<Candidato> candidatos, String titulo, String empresa, String descripcion, String contrato, String skills, String ubicacion, String salario) {
+    public Vacante(List<Candidato> candidatos, String titulo, String empresa, String descripcion, String contrato, List<Skill> skills, String ubicacion, String salario) {
         this.candidatos = candidatos;
         this.titulo = titulo;
         this.empresa = empresa;
@@ -64,7 +70,7 @@ public class Vacante {
         this.salario = salario;
     }
 
-    public Vacante(List<Candidato> candidatos, String contrato, String descripcion, String empresa, int id, String salario, String skills, String titulo, String ubicacion) {
+    public Vacante(List<Candidato> candidatos, String contrato, String descripcion, String empresa, int id, String salario, List<Skill> skills, String titulo, String ubicacion) {
         this.candidatos = candidatos;
         this.contrato = contrato;
         this.descripcion = descripcion;
@@ -125,11 +131,11 @@ public class Vacante {
         this.salario = salario;
     }
 
-    public @NotBlank(message = "Las skills son obligatorias") String getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(@NotBlank(message = "Las skills son obligatorias") String skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 

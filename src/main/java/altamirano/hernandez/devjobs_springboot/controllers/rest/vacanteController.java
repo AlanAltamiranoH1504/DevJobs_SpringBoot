@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +30,7 @@ public class vacanteController {
             return ResponseEntity.badRequest().body(errores);
         }else{
             try {
+                vacante.setSkills(vacante.getSkills());
                 iVacanteService.save(vacante);
                 json.put("msg", "Vacante guardada correctamente");
                 return ResponseEntity.status(HttpStatus.CREATED).body(json);
@@ -40,6 +38,22 @@ public class vacanteController {
                 json.put("error", e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
             }
+        }
+    }
+
+    @PostMapping("findById/{id}")
+    public ResponseEntity<?> findVacanteById(@PathVariable int id){
+        Map<String, Object> json = new HashMap<>();
+        try{
+            Vacante foundVacante = iVacanteService.findById(id);
+            if (foundVacante != null){
+                return ResponseEntity.status(HttpStatus.OK).body(foundVacante);
+            } else{
+                json.put("msg", "Vacante no encontrada");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(json);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

@@ -1,6 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
+    //Llamado de funciones
     peticionFindAllVacantes();
 
+    //Selectores
+    const listaVacantes = document.querySelector("#listaVacantes");
+
+    //Eventos
+    listaVacantes.addEventListener("click", (e) => {
+        if (e.target.id === "vacanteInfo"){
+            const btn = e.target;
+            const id = btn.getAttribute("data_id");
+            redireccionMostrarVacante(id);
+        }
+    });
+
+    //Funciones
     function peticionFindAllVacantes(){
         fetch("/home/findAllVacantes", {
             method: "GET"
@@ -8,10 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         }).then((data) =>{
             if (data.vacantes.length >= 1){
-                // console.log("Hay vacantes")
                 renderVacantes(data.vacantes);
             }else {
-                console.log("No hay vacantes");
+                mostrarAlertas("error", "divAlertas");
             }
         }).catch((error) => {
             console.log("Error en peticion de listado de vacantes");
@@ -38,10 +51,28 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="nombre contrato">${vacante.contrato}</p>     
                 </div>
                 <div class="caja centrar-vertical">
-                    <button id="vacanteInfo" data-id="${vacante.id}" class="btn btn-verde">Más Info</button>
+                    <button id="vacanteInfo" data_id="${vacante.id}" class="btn btn-verde">Más Info</button>
                 </div>
             `;
             listaVacantes.appendChild(divVacante);
         })
+    }
+
+    function mostrarAlertas(tipo, lugar){
+        const divAlertas = document.querySelector("#divAlertas");
+        if (tipo === "error"){
+            divAlertas.style.background = "red";
+            divAlertas.style.color = "white";
+            divAlertas.style.textAlign = "center";
+            divAlertas.style.textTransform = "uppercase"
+            divAlertas.style.paddingTop = "10px";
+            divAlertas.style.paddingBottom = "10px";
+
+            divAlertas.textContent = "No tienes vacante registradas";
+        }
+    }
+
+    function redireccionMostrarVacante(id){
+        window.location.href = `/vacantes/busqueda-vacante/${id}`;
     }
 })
