@@ -57,6 +57,26 @@ public class vacanteController {
         }
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateVacante(@Valid @RequestBody Vacante vacante, BindingResult bindingResult){
+        Map<String, Object> json = new HashMap<>();
+        if (bindingResult.hasErrors()){
+            Map<String, Object> errores = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error ->{
+                errores.put(error.getField(), error.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errores);
+        }else{
+            try{
+                iVacanteService.save(vacante);
+                json.put("msg", "Vacante actualizada correctamente");
+                return ResponseEntity.status(HttpStatus.OK).body(json);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            }
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteVacanteById(@PathVariable int id){
         Map<String, Object> json = new HashMap<>();

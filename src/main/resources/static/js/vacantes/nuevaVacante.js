@@ -9,10 +9,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function requestSaveNuevaVacante(e){
         e.preventDefault();
 
-        let skillSeleccionadas = "";
         let skillSeleccionados2 = [];
         document.querySelectorAll("input[name='skills']:checked").forEach((check, index, array) => {
-            skillSeleccionadas += check.value + (index < array.length -1 ? "," : "")
             const skill = {
                 id: check.getAttribute("data-id"),
                 nombre: check.value
@@ -73,7 +71,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 });
                 setTimeout(() => {
                     divAlertas.innerHTML = "";
-                }, 7000)
+                }, 5000)
             }
         }).catch((error) => {
             console.log("Error en peticion de guardado");

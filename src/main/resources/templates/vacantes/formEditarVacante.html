@@ -33,7 +33,7 @@
 </div>
 
 <header class="header site-header contenedor separador">
-  <h2 th:text="${nombrePagina}"></h2>
+  <h2 id="nombrePagina" th:text="${nombrePagina}"></h2>
 
   <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
 
@@ -41,7 +41,7 @@
 
 <div class="contenido-principal contenedor">
   <main class="contenedor">
-    <form action="" method="post" class="default-form" id="formNuevaVacante">
+    <form action="" method="post" class="default-form" id="formEdicionVacante">
       <h3>Información General de la Vacante</h3>
       <!--            <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
       <div class="campo">
@@ -211,8 +211,9 @@
           WordPress
         </label>
       </div>
+      <div id="alertas"></div>
       <div class="campo centrar-horizontal">
-        <input type="submit" value="Agregar Vacante" class="btn btn-azul">
+        <input type="submit" value="Actualizar Vacante" class="btn btn-azul">
       </div>
     </form>
   </main>
@@ -220,7 +221,7 @@
 
 <!-- Archivos de Trix -->
 <script src="/js/trix.js"></script>
-<!--<script src="/js/vacantes/nuevaVacante.js"></script>-->
+  <script src="/js/vacantes/edicionVacante.js"></script>
 <!--Sweet Alert-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
