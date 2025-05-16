@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#empresa").value = info.empresa;
         document.querySelector("#ubicacion").value = info.ubicacion;
         document.querySelector("#salario").value = info.salario;
+        document.querySelector("#contrato").value = info.contrato;
         document.querySelector("#x").value = info.descripcion;
     }
 

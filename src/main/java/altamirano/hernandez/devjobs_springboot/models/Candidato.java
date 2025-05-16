@@ -22,6 +22,10 @@ public class Candidato {
     @Size(max = 100, message = "El maximo del email es 100 caracteres")
     private String email;
 
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 5, max = 100, message = "El minimo de la contraseña es 5 caracteres")
+    private String password;
+
     @NotBlank(message = "El cv del candidato es obligatorio")
     @Size(max = 500)
     private String cv;
@@ -32,16 +36,18 @@ public class Candidato {
 
     //Constructores
     public Candidato() {}
-    public Candidato(String nombre, String email, String cv, List<Vacante> vacantes) {
+    public Candidato(String nombre, String email, String password, String cv, List<Vacante> vacantes) {
         this.nombre = nombre;
         this.email = email;
+        this.password = password;
         this.cv = cv;
         this.vacantes = vacantes;
     }
-    public Candidato(int id, String nombre, String email, String cv, List<Vacante> vacantes) {
+    public Candidato(int id, String nombre, String email, String password, String cv, List<Vacante> vacantes) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
+        this.password = password;
         this.cv = cv;
         this.vacantes = vacantes;
     }
@@ -71,6 +77,14 @@ public class Candidato {
         this.email = email;
     }
 
+    public @NotBlank(message = "La contraseña es obligatoria") @Size(min = 5, max = 100, message = "El minimo de la contraseña es 5 caracteres") String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotBlank(message = "La contraseña es obligatoria") @Size(min = 5, max = 100, message = "El minimo de la contraseña es 5 caracteres") String password) {
+        this.password = password;
+    }
+
     public @NotBlank(message = "El cv del candidato es obligatorio") String getCv() {
         return cv;
     }
@@ -90,14 +104,15 @@ public class Candidato {
     //Equals y Hashcode
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Candidato candidato = (Candidato) o;
-        return id == candidato.id && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(cv, candidato.cv) && Objects.equals(vacantes, candidato.vacantes);
+        return id == candidato.id && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(password, candidato.password) && Objects.equals(cv, candidato.cv) && Objects.equals(vacantes, candidato.vacantes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, email, cv, vacantes);
+        return Objects.hash(id, nombre, email, password, cv, vacantes);
     }
 }

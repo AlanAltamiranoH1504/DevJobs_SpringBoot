@@ -4,9 +4,11 @@ import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.repositories.ICandidatoRepository;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ImplCandidatoService implements ICandidatoService {
     @Autowired
     private ICandidatoRepository iCandidatoRepository;
