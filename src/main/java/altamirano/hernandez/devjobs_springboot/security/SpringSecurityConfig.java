@@ -43,6 +43,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         //Rutas que no requieren proteccion
                         .requestMatchers(HttpMethod.POST, "/candidatos/save").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/roles/save").permitAll()
 
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/assets/**", "/img/**", "/js/**", "/static/**").permitAll()
