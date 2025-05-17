@@ -1,6 +1,7 @@
 package altamirano.hernandez.devjobs_springboot.services;
 
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
+import altamirano.hernandez.devjobs_springboot.models.Rol;
 import altamirano.hernandez.devjobs_springboot.repositories.ICandidatoRepository;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,26 @@ public class ImplCandidatoService implements ICandidatoService {
         try {
             Candidato candidato = iCandidatoRepository.findById(id).get();
             return candidato;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Candidato findByEmail(String email) {
+        try{
+            Candidato candidato = iCandidatoRepository.findByEmail(email);
+            return candidato;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<String> rolesByUserId(int id) {
+        try{
+            List<String> rolList = iCandidatoRepository.permisosByUserId(id);
+            return rolList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

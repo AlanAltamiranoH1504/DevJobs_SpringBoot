@@ -45,6 +45,11 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/candidatos/save").permitAll()
                         .requestMatchers(HttpMethod.POST, "/roles/save").permitAll()
 
+                        //Rutas que requieren proteccion
+                        .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/home/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/vacante/**").hasRole("USER")
+
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/assets/**", "/img/**", "/js/**", "/static/**").permitAll()
 
