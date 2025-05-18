@@ -44,6 +44,7 @@ public class SpringSecurityConfig {
                         //Rutas que no requieren proteccion
                         .requestMatchers(HttpMethod.POST, "/candidatos/save").permitAll()
                         .requestMatchers(HttpMethod.POST, "/roles/save").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
 
                         //Rutas que requieren proteccion
                         .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")
