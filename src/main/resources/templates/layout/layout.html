@@ -34,6 +34,10 @@
         <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
 
         <a th:if="boton" th:href="@{/vacantes/nueva}" class="btn btn-azul">Publicar Nueva Vacante</a>
+
+        <form method="post" action="/logout" style="margin-top: 10px">
+            <input type="submit" class="btn btn-rojo" value="Cerrar Sesión">
+        </form>
     </header>
 
     <div class="contenido-principal contenedor">

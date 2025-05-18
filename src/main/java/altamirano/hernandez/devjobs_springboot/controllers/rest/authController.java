@@ -1,7 +1,11 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
+import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.models.Login;
+import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +35,11 @@ public class authController {
     private static final Logger log = LoggerFactory.getLogger(authController.class);
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private ICandidatoService iCandidatoService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody Login login, BindingResult bindingResult, HttpServletRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody Login login, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> json = new HashMap<>();
         if (bindingResult.hasErrors()) {
             Map<String, Object> errores = new HashMap<>();
@@ -50,6 +56,15 @@ public class authController {
             context.setAuthentication(auth);
             SecurityContextHolder.setContext(context);
             request.getSession(true).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+
+            //Creacion de cookie
+            Candidato candidatoInSession = iCandidatoService.findByEmail(login.getEmail());
+            Cookie cookie = new Cookie("usuario_id", Integer.toString(candidatoInSession.getId()));
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(cookie);
+
             json.put("status", HttpStatus.OK.value());
 
             return ResponseEntity.ok().body(json);

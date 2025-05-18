@@ -5,6 +5,7 @@ import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteServi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class homeController {
     private IVacanteService iVacanteService;
 
     @GetMapping("/findAllVacantes")
-    public ResponseEntity<?> findAllVacantes(){
+    public ResponseEntity<?> findAllVacantes(@CookieValue(name = "usuario_id") String usuario_id){
         Map<String, Object> json = new HashMap<String, Object>();
         try{
             List<Vacante> vacanteList = iVacanteService.findAllVacantes();

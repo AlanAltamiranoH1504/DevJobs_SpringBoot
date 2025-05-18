@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const formCrearCuenta = document.querySelector("#formCrearCuenta");
 
     //Eventos
