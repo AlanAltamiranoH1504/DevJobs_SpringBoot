@@ -2,6 +2,8 @@ package altamirano.hernandez.devjobs_springboot.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,10 @@ public class Reclutador {
         this.email = email;
         this.password = password;
     }
+
+    //Relacion OneToMany - Un Reclutador puede tener varias vacantes
+//    @OneToMany(mappedBy = "reclutador", cascade = CascadeType.ALL, orphanRemoval = true)
+//    List<Vacante> vacantes = new ArrayList<>();
 
     //Get y Set
     public int getId() {

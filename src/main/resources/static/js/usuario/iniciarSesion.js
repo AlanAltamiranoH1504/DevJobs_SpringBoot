@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
+        const csrf_token = document.querySelector("#csrf").value;
+
         const requestBody = {
             email,
             password
@@ -15,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch("/auth/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrf_token
             },
             body: JSON.stringify(requestBody)
         }).then((response) => {

@@ -7,12 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,7 +46,6 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //Rutas que no requieren proteccion
                         .requestMatchers(HttpMethod.POST, "/candidatos/save").permitAll()
@@ -56,11 +53,13 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/crear-cuenta").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers("/logout").permitAll()
 
                         //Rutas que requieren proteccion
                         .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/home/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/vacante/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/vacante/**").hasRole("USER")
 
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/assets/**", "/img/**", "/js/**", "/static/**").permitAll()
@@ -73,18 +72,8 @@ public class SpringSecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessHandler(((request, response, authentication) -> {
-                            request.getSession().invalidate();
-                            SecurityContextHolder.clearContext();
-                            Cookie cookie = new Cookie("usuario_id", null);
-                            cookie.setMaxAge(0);
-                            cookie.setPath("/");
-                            cookie.setHttpOnly(true);
-                            response.addCookie(cookie);
-
-                            response.sendRedirect("/");
-                        }))
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID", "usuario_id")
                 );
         return http.build();
     }

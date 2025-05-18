@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
             skillSeleccionados2.push(skill);
         });
+        const csrfToke = document.querySelector("#csrf").value;
         const inputTitulo = document.querySelector("#titulo").value;
         const inputEmpresa = document.querySelector("#empresa").value;
         const inputUbicacion = document.querySelector("#ubicacion").value;
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToke
             },
             body: JSON.stringify(requestBody)
         }).then((response) => {

@@ -36,6 +36,8 @@
 </header>
 
 <div class="contenido-superior vacante contenedor">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf" >
+
     <div class="caja">
         <p class="etiqueta">Empresa</p>
         <p class="nombre" id="empresa"></p>

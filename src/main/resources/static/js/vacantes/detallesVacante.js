@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const pathParths = window.location.pathname.split("/");
     const id = pathParths[3];
+    const token = document.querySelector("#csrf").value;
+
     fetch(`/vacante/findById/${id}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            // "X-CSRF-TOKEN":
+            "X-CSRF-TOKEN": token
         }
     }).then((response) =>{
         return response.json();
@@ -65,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function eliminacionVacante(id){
+        const token = document.querySelector("#csrf").value;
         Swal.fire({
             title: "¿Estas seguro que quieres eliminar la vacante?",
             text: "Esta acción no se puede deshacer",
@@ -77,7 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch(`/vacante/delete/${id}`, {
                     method: "DELETE",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": token
                     }
                 }).then((response) => {
                     return response.json();
@@ -90,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             timer: 3000
                         });
                         setTimeout(() =>{
-                            window.location.href = "/";
+                            window.location.href = "/home";
                         }, 4000)
                     }
                 }).catch((e) => {

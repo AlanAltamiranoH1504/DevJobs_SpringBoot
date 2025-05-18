@@ -47,6 +47,11 @@ public class Vacante {
     )
     private List<Candidato> candidatos;
 
+    //Relacion ManyToOne - Varias vacantes pertenece a un Recluatdor
+//    @ManyToOne
+//    @JoinColumn(name = "reclutador_id")
+//    Reclutador reclutador;
+
     //Relacion ManyToMany - Una vacante puede tener varias skill
     @NotEmpty(message = "Las skills son obligatorias")
     @ManyToMany

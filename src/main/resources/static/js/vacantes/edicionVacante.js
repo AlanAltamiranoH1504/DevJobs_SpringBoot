@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const pathParts = window.location.pathname.split("/");
     const id = pathParts[3];
+    const token = document.querySelector("#csrf").value;
 
     fetch(`/vacante/findById/${id}`, {
-        method: "POST"
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": token
+        }
     }).then((response) => {
         return response.json();
     }).then((data) => {

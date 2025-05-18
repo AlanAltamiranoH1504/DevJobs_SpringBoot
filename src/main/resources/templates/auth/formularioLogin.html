@@ -37,6 +37,7 @@
 
 <main class="contenedor">
   <form method="post" class="default-form" id="formIniciarSesion">
+    <input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}">
     <div class="campo">
       <label for="email">Email:</label>
       <input type="email" name="email" id="email" placeholder="Email de Usuario">
