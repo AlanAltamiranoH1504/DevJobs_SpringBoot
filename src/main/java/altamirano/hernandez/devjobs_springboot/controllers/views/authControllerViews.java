@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/auth")
-public class authController {
+@RequestMapping("/")
+public class authControllerViews {
 
     @GetMapping("/crear-cuenta")
     public String formularioRegistroUsuarios(Model model){
@@ -15,5 +15,13 @@ public class authController {
         model.addAttribute("tagline", "Comienza a Publicar tus Vacantes Gratis, Solo Debes Crear Una Cuenta");
 
         return "auth/formularioRegistroUsuarios";
+    }
+
+    @GetMapping("/")
+    public String formularioLogin(Model model){
+        model.addAttribute("nombrePagina", "Inicia Sesión en DevJobs");
+        model.addAttribute("tagline", "Incia Sesión y Empieza Publicar tus Vacantes");
+
+        return "auth/formularioLogin";
     }
 }

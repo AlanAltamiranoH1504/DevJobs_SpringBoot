@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class homeControllerViews {
 
-    @GetMapping("/")
+    @GetMapping("")
     public String layoutBase(Model model){
         model.addAttribute("nombrePagina", "DevJobs");
         model.addAttribute("tagline", "Encuentra y publica trabajos para desarrolladores web");

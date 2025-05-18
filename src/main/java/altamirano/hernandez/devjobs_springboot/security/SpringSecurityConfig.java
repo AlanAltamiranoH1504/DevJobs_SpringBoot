@@ -1,7 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.security;
 
 //Clase de configuracion de security
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,12 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    //Metodo SecurityContextRepository para persistencia de sesion en AJAX
+    @Bean
+    public SecurityContextRepository securityContextRepository(){
+        return new HttpSessionSecurityContextRepository();
+    }
+
     //Metodo securityFilter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,6 +52,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/candidatos/save").permitAll()
                         .requestMatchers(HttpMethod.POST, "/roles/save").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         //Rutas que requieren proteccion
                         .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")
@@ -57,7 +65,10 @@ public class SpringSecurityConfig {
                         //Configuraciones generales
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/") //Ruta Formulario
+                        .permitAll()
+                )
                 .logout(Customizer.withDefaults());
         return http.build();
     }
