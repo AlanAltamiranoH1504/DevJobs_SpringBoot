@@ -1,6 +1,8 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
+import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.models.Vacante;
+import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,13 @@ public class vacanteController {
 
     @Autowired
     private IVacanteService iVacanteService;
+    @Autowired
+    private ICandidatoService iCandidatoService;
 
     @PostMapping("/save-vacante")
-    public ResponseEntity<?> saveVacante(@Valid @RequestBody Vacante vacante, BindingResult bindingResult) {
+    public ResponseEntity<?> saveVacante(@Valid @RequestBody Vacante vacante, BindingResult bindingResult, @CookieValue(name = "usuario_id") String usuario_id) {
         Map<String, Object> json = new HashMap<>();
+        System.out.println("usuario_id = " + usuario_id);
         if (bindingResult.hasErrors()){
             Map<String, Object> errores = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error ->{
@@ -30,7 +35,11 @@ public class vacanteController {
             return ResponseEntity.badRequest().body(errores);
         }else{
             try {
+                Candidato candidato = iCandidatoService.findById(Integer.parseInt(usuario_id));
                 vacante.setSkills(vacante.getSkills());
+                vacante.setCandidato(candidato);
+                System.out.println(vacante.getCandidato());
+                System.out.println(vacante.getSkills());
                 iVacanteService.save(vacante);
                 json.put("msg", "Vacante guardada correctamente");
                 return ResponseEntity.status(HttpStatus.CREATED).body(json);

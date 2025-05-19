@@ -20,6 +20,12 @@ public class ImplVacanteService implements IVacanteService {
     }
 
     @Override
+    public List<Vacante> findAllByUserId(int id) {
+        List<Vacante> vacantes = iVacanteRepository.findAllByUserId(id);
+        return vacantes;
+    }
+
+    @Override
     public Vacante findById(int id) {
         try{
             Vacante vacante = iVacanteRepository.findById(id).get();

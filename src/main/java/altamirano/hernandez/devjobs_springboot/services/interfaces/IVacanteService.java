@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IVacanteService {
     public abstract List<Vacante> findAllVacantes();
+    public abstract List<Vacante> findAllByUserId(int id);
     public abstract Vacante findById(int id);
     public abstract void save(Vacante vacante);
     public abstract void deleteById(int id);

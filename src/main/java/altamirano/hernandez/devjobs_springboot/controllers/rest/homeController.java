@@ -24,7 +24,7 @@ public class homeController {
     public ResponseEntity<?> findAllVacantes(@CookieValue(name = "usuario_id") String usuario_id){
         Map<String, Object> json = new HashMap<String, Object>();
         try{
-            List<Vacante> vacanteList = iVacanteService.findAllVacantes();
+            List<Vacante> vacanteList = iVacanteService.findAllByUserId(Integer.parseInt(usuario_id));
             json.put("vacantes", vacanteList);
             return ResponseEntity.status(HttpStatus.OK).body(json);
         } catch (Exception e) {

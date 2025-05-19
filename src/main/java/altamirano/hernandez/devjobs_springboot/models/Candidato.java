@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +34,10 @@ public class Candidato {
     //Relacion ManyToMany - Un candidato puede estar postulado a varias vacantes
     @ManyToMany(mappedBy = "candidatos")
     private List<Vacante> vacantes;
+
+    //Relacion OneToMany - Un candidato puede tener varias vacantes
+    @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Vacante> vacanteList = new ArrayList<>();
 
     //Relacion ManyToMany - Un candidato puede tener varios roles
     @ManyToMany

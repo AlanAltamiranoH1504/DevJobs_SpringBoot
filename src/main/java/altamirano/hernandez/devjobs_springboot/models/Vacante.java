@@ -47,10 +47,10 @@ public class Vacante {
     )
     private List<Candidato> candidatos;
 
-    //Relacion ManyToOne - Varias vacantes pertenece a un Recluatdor
-//    @ManyToOne
-//    @JoinColumn(name = "reclutador_id")
-//    Reclutador reclutador;
+    //Relacion ManyToOne - Varias vacantes pertenece a un Candidato
+    @ManyToOne
+    @JoinColumn(name = "candidato_id")
+    Candidato candidato;
 
     //Relacion ManyToMany - Una vacante puede tener varias skill
     @NotEmpty(message = "Las skills son obligatorias")
@@ -162,8 +162,15 @@ public class Vacante {
         this.ubicacion = ubicacion;
     }
 
-    //Equals y Hashcode
+    public Candidato getCandidato() {
+        return candidato;
+    }
 
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
+    }
+
+    //Equals y Hashcode
     @Override
     public boolean equals(Object o) {
 

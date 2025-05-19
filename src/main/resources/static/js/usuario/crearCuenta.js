@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.querySelector("#password").value;
         const password2 = document.querySelector("#password2").value;
         const selectTipo = document.querySelector("#tipo").value;
+        const token = document.querySelector("#csrf").value;
 
         if (password !== password2){
             Swal.fire({
@@ -30,14 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
             password,
             cv: "Sin cv"
         }
-        peticion(requestBody, selectTipo);
+        peticion(requestBody, selectTipo, token);
     }
 
-    function peticion(requestBody, tipo){
+    function peticion(requestBody, tipo, token){
         fetch("/candidatos/save", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token
             },
             body: JSON.stringify(requestBody)
         }).then((response) => {
@@ -60,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 alertas(data);
             }
         }).catch((error) => {
-            console.log("Error");
+            console.log("Error en creacion de usuario");
+            console.log(error.message)
         })
     }
 
