@@ -32,11 +32,13 @@
 
         <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
 
-        <a th:if="boton" th:href="@{/vacantes/nueva}" class="btn btn-azul">Publicar Nueva Vacante</a>
+        <a th:if="boton" th:href="@{/vacantes/nueva}" class="btn btn-azul" style="margin-bottom: 10px">Publicar Nueva Vacante</a>
+
+        <a th:if="btnEditarPerfil" th:href="@{/usuario/editar-perfil}" class="btn btn-verde">Editar Perfil</a>
 
         <form method="post" action="/logout" style="margin-top: 10px">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="submit" class="btn btn-rojo" value="Cerrar Sesión">
+            <input type="submit" class="btn btn-rojo" value="Salir">
         </form>
     </header>
 

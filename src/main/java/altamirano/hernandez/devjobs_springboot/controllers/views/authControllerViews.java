@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.controllers.views;
 
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +24,13 @@ public class authControllerViews {
         model.addAttribute("tagline", "Incia Sesión y Empieza Publicar tus Vacantes");
 
         return "auth/formularioLogin";
+    }
+
+    @GetMapping("/dev-jobs")
+    public String devJobsSinSesion(Model model){
+        model.addAttribute("nombrePagina", "Vacantes Disponibles en DevJobs");
+        model.addAttribute("tagline", "Registrate y Empieza a Publicar tus Vacantes");
+
+        return "auth/devJobs";
     }
 }

@@ -53,6 +53,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/crear-cuenta").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/dev-jobs/**").permitAll()
                         .requestMatchers("/logout").permitAll()
 
                         //Rutas que requieren proteccion

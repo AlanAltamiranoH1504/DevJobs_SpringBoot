@@ -2,7 +2,9 @@ package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.models.Login;
+import altamirano.hernandez.devjobs_springboot.models.Vacante;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
+import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,12 +22,10 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/auth")
@@ -37,6 +37,8 @@ public class authController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private ICandidatoService iCandidatoService;
+    @Autowired
+    private IVacanteService iVacanteService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody Login login, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
@@ -79,6 +81,17 @@ public class authController {
             json.put("message", "Error inesperado: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
         }
+    }
 
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAllVacantes(){
+        Map<String, Object> json = new HashMap<>();
+        try{
+            List<Vacante> vacantes = iVacanteService.findAllVacantes();
+            return ResponseEntity.status(HttpStatus.OK).body(vacantes);
+        } catch (Exception e) {
+            json.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
+        }
     }
 }
