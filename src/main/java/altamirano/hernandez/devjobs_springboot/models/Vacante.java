@@ -47,7 +47,7 @@ public class Vacante {
     )
     private List<Candidato> candidatos;
 
-    //Relacion ManyToOne - Varias vacantes pertenece a un Candidato
+    //Relacion ManyToOne - Varias vacantes para un candidato
     @ManyToOne
     @JoinColumn(name = "candidato_id")
     Candidato candidato;

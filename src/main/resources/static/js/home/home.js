@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     //Llamado de funciones
     peticionFindAllVacantes();
 

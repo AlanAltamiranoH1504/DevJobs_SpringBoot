@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Configuration
 @EnableWebSecurity
@@ -61,6 +62,8 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/home/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/vacante/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/vacante/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/usuario/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/candidatos/update").hasRole("USER")
 
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/assets/**", "/img/**", "/js/**", "/static/**").permitAll()
