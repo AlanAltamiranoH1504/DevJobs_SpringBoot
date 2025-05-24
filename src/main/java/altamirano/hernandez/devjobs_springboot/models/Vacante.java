@@ -38,14 +38,14 @@ public class Vacante {
     @Size(min = 3, max = 500, message = "La descripcion tiene un maximo de 500 caracteres")
     private String descripcion;
 
-    //Relacion ManyToMany: Una vacante puede tener varios candidatos
+    //Relacion ManyToMany: Una vacante puede tener varios interesados
     @ManyToMany
     @JoinTable(
-            name = "vacantes_candidatos",
+            name = "vacantes_interesados",
             joinColumns = @JoinColumn(name = "vacante_id"),
-            inverseJoinColumns = @JoinColumn(name = "candidato_id")
+            inverseJoinColumns = @JoinColumn(name = "interesado_id")
     )
-    private List<Candidato> candidatos;
+    private List<Interesado> interesados;
 
     //Relacion ManyToOne - Varias vacantes para un candidato
     @ManyToOne
@@ -66,8 +66,8 @@ public class Vacante {
     public Vacante(){
 
     }
-    public Vacante(List<Candidato> candidatos, String titulo, String empresa, String descripcion, String contrato, List<Skill> skills, String ubicacion, String salario) {
-        this.candidatos = candidatos;
+    public Vacante(List<Interesado> interesados, String titulo, String empresa, String descripcion, String contrato, List<Skill> skills, String ubicacion, String salario) {
+        this.interesados = interesados;
         this.titulo = titulo;
         this.empresa = empresa;
         this.descripcion = descripcion;
@@ -77,8 +77,8 @@ public class Vacante {
         this.salario = salario;
     }
 
-    public Vacante(List<Candidato> candidatos, String contrato, String descripcion, String empresa, int id, String salario, List<Skill> skills, String titulo, String ubicacion) {
-        this.candidatos = candidatos;
+    public Vacante(List<Interesado> interesados, String contrato, String descripcion, String empresa, int id, String salario, List<Skill> skills, String titulo, String ubicacion) {
+        this.interesados = interesados;
         this.contrato = contrato;
         this.descripcion = descripcion;
         this.empresa = empresa;
@@ -90,12 +90,12 @@ public class Vacante {
     }
 
     //Get y Set
-    public List<Candidato> getCandidatos() {
-        return candidatos;
+    public List<Interesado> getInteresados() {
+        return interesados;
     }
 
-    public void setCandidatos(List<Candidato> candidatos) {
-        this.candidatos = candidatos;
+    public void setInteresados(List<Interesado> interesados) {
+        this.interesados = interesados;
     }
 
     public @NotBlank(message = "El tipo de contrato es obligatorio") @Size(max = 80, message = "El tipo de contrato tiene un maximo de 80 caracteres") String getContrato() {
@@ -177,11 +177,11 @@ public class Vacante {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vacante vacante = (Vacante) o;
-        return id == vacante.id && Objects.equals(titulo, vacante.titulo) && Objects.equals(empresa, vacante.empresa) && Objects.equals(ubicacion, vacante.ubicacion) && Objects.equals(salario, vacante.salario) && Objects.equals(contrato, vacante.contrato) && Objects.equals(descripcion, vacante.descripcion) && Objects.equals(skills, vacante.skills) && Objects.equals(candidatos, vacante.candidatos);
+        return id == vacante.id && Objects.equals(titulo, vacante.titulo) && Objects.equals(empresa, vacante.empresa) && Objects.equals(ubicacion, vacante.ubicacion) && Objects.equals(salario, vacante.salario) && Objects.equals(contrato, vacante.contrato) && Objects.equals(descripcion, vacante.descripcion) && Objects.equals(skills, vacante.skills) && Objects.equals(interesados, vacante.interesados);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, empresa, ubicacion, salario, contrato, descripcion, skills, candidatos);
+        return Objects.hash(id, titulo, empresa, ubicacion, salario, contrato, descripcion, skills, interesados);
     }
 }

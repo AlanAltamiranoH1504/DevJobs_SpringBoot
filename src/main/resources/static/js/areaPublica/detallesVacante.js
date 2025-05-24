@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const idVacante = parametherParts[4];
     encontrarVacante(idVacante);
 
+    //Selectores
+    const formEnvioCV = document.querySelector("#formEnvioCV");
+
+    //Eventos
+    formEnvioCV.addEventListener("submit", peticionEnvioCV);
 
     //Funciones
     function encontrarVacante(id) {
@@ -56,5 +61,36 @@ document.addEventListener("DOMContentLoaded", () => {
         imagenPerfil.style.width = "70%"
         document.querySelector("#descripcionReclutador").textContent = descripcion;
         document.querySelector("#email").textContent = email
+    }
+
+    function peticionEnvioCV(e){
+        e.preventDefault();
+
+        const nombreInteresado = document.querySelector("#nombreInteresado").value;
+        const emailInteresado = document.querySelector("#emailInteresado").value;
+        const vacanteId = document.querySelector("#vacanteId").value;
+        const inputCV = document.querySelector("#cv").files[0];
+        const token = document.querySelector("#csrf").value;
+
+        const formData = new FormData();
+        formData.append("nombreInteresado", nombreInteresado);
+        formData.append("emailInteresado", emailInteresado);
+        formData.append("vacanteId", vacanteId);
+        formData.append("cv", inputCV);
+
+        fetch("/vacantes/publica/save/interesado", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": token
+            },
+            body: formData
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data)
+        }).catch((e) => {
+            console.log("Error en el envio de interesado")
+        })
+
     }
 })

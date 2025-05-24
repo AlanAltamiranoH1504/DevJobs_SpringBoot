@@ -37,8 +37,8 @@ public class Candidato {
     private String cv;
 
     //Relacion ManyToMany - Un candidato puede estar postulado a varias vacantes
-    @ManyToMany(mappedBy = "candidatos")
-    private List<Vacante> vacantes;
+//    @ManyToMany(mappedBy = "candidatos")
+//    private List<Vacante> vacantes;
 
     //Relacion OneToMany - Un candidato para varias vacantes
     @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -55,24 +55,24 @@ public class Candidato {
 
     //Constructores
     public Candidato() {}
-    public Candidato(String nombre, String email, String password, String descripcion, String imgPerfil, String cv, List<Vacante> vacantes, List<Rol> roles) {
+    public Candidato(String nombre, String email, String password, String descripcion, String imgPerfil, String cv, List<Rol> roles) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.cv = cv;
-        this.vacantes = vacantes;
+//        this.vacantes = vacantes;
         this.roles = roles;
         this.imgPerfil = imgPerfil;
         this.descripcion = descripcion;
 
     }
-    public Candidato(int id, String nombre, String email, String password, String descripcion, String imgPerfil, String cv, List<Vacante> vacantes, List<Rol> roles) {
+    public Candidato(int id, String nombre, String email, String password, String descripcion, String imgPerfil, String cv,  List<Rol> roles) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.cv = cv;
-        this.vacantes = vacantes;
+//        this.vacantes = vacantes;
         this.roles = roles;
         this.imgPerfil = imgPerfil;
         this.descripcion = descripcion;
@@ -135,13 +135,13 @@ public class Candidato {
         this.imgPerfil = imgPerfil;
     }
 
-    public List<Vacante> getVacantes() {
-        return vacantes;
-    }
-
-    public void setVacantes(List<Vacante> vacantes) {
-        this.vacantes = vacantes;
-    }
+//    public List<Vacante> getVacantes() {
+//        return vacantes;
+//    }
+//
+//    public void setVacantes(List<Vacante> vacantes) {
+//        this.vacantes = vacantes;
+//    }
 
     public List<Rol> getRoles() {
         return roles;
@@ -152,15 +152,16 @@ public class Candidato {
     }
 
     //Equals y Hashcode
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Candidato candidato = (Candidato) o;
-        return id == candidato.id && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(password, candidato.password) && Objects.equals(descripcion, candidato.descripcion) && Objects.equals(imgPerfil, candidato.imgPerfil) && Objects.equals(cv, candidato.cv) && Objects.equals(vacantes, candidato.vacantes) && Objects.equals(vacanteList, candidato.vacanteList) && Objects.equals(roles, candidato.roles);
+        return id == candidato.id && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(password, candidato.password) && Objects.equals(descripcion, candidato.descripcion) && Objects.equals(imgPerfil, candidato.imgPerfil) && Objects.equals(cv, candidato.cv) && Objects.equals(vacanteList, candidato.vacanteList) && Objects.equals(roles, candidato.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, email, password, descripcion, imgPerfil, cv, vacantes, vacanteList, roles);
+        return Objects.hash(id, nombre, email, password, descripcion, imgPerfil, cv, vacanteList, roles);
     }
 }
