@@ -42,7 +42,7 @@
 <div class="contenido-principal contenedor">
     <main class="contenedor">
         <form action="" method="post" class="default-form" id="formEditarPerfil">
-            <h3>Información General de la Vacante</h3>
+            <h3>Actualiza Tu Perfil de Usuario</h3>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf">
 
             <div id="divAlertas"></div>
@@ -71,6 +71,10 @@
             </div>
 
             <div id="alertas"></div>
+
+            <div class="campo acciones">
+                <a th:href="@{/usuario/actualizar-foto}">Actualizar Foto de Perfil</a>
+            </div>
             <div class="campo centrar-horizontal">
                 <input type="submit" value="Actualizar Perfil" class="btn btn-azul">
             </div>

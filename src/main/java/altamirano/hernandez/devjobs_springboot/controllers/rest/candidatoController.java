@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
+import altamirano.hernandez.devjobs_springboot.helpers.GeneradorIDUnicos;
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.models.DTO.UsuarioDTO;
 import altamirano.hernandez.devjobs_springboot.models.Rol;
@@ -13,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +33,8 @@ public class candidatoController {
     private IRolRepository iRolRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private GeneradorIDUnicos generadorIDUnicos;
 
     @PostMapping("/save")
     public ResponseEntity<?> saveCandidato(@Valid @RequestBody Candidato candidato, BindingResult bindingResult) {
@@ -90,6 +96,43 @@ public class candidatoController {
                 json.put("line", e.getLocalizedMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
             }
+        }
+    }
+
+    @PutMapping("/update/img-perfil")
+    public ResponseEntity<?> updateImgPerfil(@RequestParam("imagen") MultipartFile archivo, @CookieValue(name = "usuario_id") String usuario_id) {
+        Map<String, Object> json = new HashMap<>();
+
+        if (archivo.isEmpty()) {
+            json.put("error", "Archivo no subido de manera correcta");
+            return ResponseEntity.badRequest().body(json);
+        }
+
+        //Almacenamiento de archivo
+        try {
+            String carpetaDestino = Paths.get("statics/uploads").toAbsolutePath().toString();
+            File directortioDestino = new File(carpetaDestino);
+
+            if (!directortioDestino.exists()) {
+                directortioDestino.mkdirs();
+            }
+
+            //Almacenajo de archivo
+            String nombreArchivo = generadorIDUnicos.generadorIdUnico() + "_" + archivo.getOriginalFilename();
+            String rutaDestinoArchivo = carpetaDestino + "/" + nombreArchivo;
+            archivo.transferTo(new File(rutaDestinoArchivo));
+
+            //Actualizacion de atributo imagen en usuario
+            Candidato candidato = iCandidatoService.findById(Integer.parseInt(usuario_id));
+            candidato.setImgPerfil(nombreArchivo);
+            iCandidatoService.save(candidato);
+
+            json.put("msg", "Foto de perfil actualizada");
+            return ResponseEntity.status(HttpStatus.OK).body(json);
+
+        } catch (Exception e) {
+            json.put("msg", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
         }
     }
 }

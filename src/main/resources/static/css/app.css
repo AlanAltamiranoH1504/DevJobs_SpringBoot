@@ -557,3 +557,9 @@ p.candidatos {
     color: white;
     text-align: center;
 }
+
+.img_perfil{
+    width: 30%;
+    display: block;
+    margin: 0 auto;
+}

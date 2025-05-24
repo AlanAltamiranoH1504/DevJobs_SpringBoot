@@ -27,11 +27,10 @@ public class Candidato {
     @Size(min = 5, max = 100, message = "El minimo de la contraseña es 5 caracteres")
     private String password;
 
-    @NotBlank(message = "La descripcion es obligatoria")
     @Size(min = 10, max = 500, message = "El tamaño maximo de la descripcion es de 500 caracteres")
     private String descripcion;
 
-    @Size(max = 500, message = "Maximo 500 caracteres")
+    @Size(max = 1000, message = "Maximo 500 caracteres")
     private String imgPerfil;
 
     @Size(max = 500)

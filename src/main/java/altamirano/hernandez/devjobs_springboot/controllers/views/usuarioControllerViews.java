@@ -16,4 +16,12 @@ public class usuarioControllerViews {
 
         return "usuario/formEditarPerfil";
     }
+
+    @GetMapping("/actualizar-foto")
+    public String formActualizarFotoPerfil(Model model) {
+        model.addAttribute("nombrePagina", "Edita tu Foto de Perfil de Usuario");
+        model.addAttribute("tagline", "Mantente Actualizado tu Foto de Usuario");
+
+        return "usuario/formActualizarFotoPerfil";
+    }
 }

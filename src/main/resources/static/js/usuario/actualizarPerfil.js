@@ -1,6 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
-    llenadoFormulario();
+    if (document.querySelector("#formEditarFoto")) {
+        busquedaInformacionUusario();
 
+        const formEditarFoto = document.querySelector("#formEditarFoto");
+
+        //Eventos
+        formEditarFoto.addEventListener("submit", creacionRequest);
+
+        //Funciones
+        function busquedaInformacionUusario() {
+            fetch("/candidatos/findById", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector("#csrf").value
+                }
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                if (data.imgPerfil) {
+                    const {imgPerfil} = data;
+                    const imgPerfilHTML = document.querySelector("#img_perfil");
+                    const direccionImagenes = "/uploads/" + imgPerfil;
+                    imgPerfilHTML.setAttribute("src", direccionImagenes);
+                }
+            }).catch((e) => {
+                console.log("Error en busqueda de usuario");
+                console.log(e.message)
+            });
+        }
+
+        function creacionRequest(e) {
+            e.preventDefault();
+
+            const token = document.querySelector("#csrf").value;
+            const inputArchivo = document.querySelector("#imagen").files[0];
+            const formData = new FormData();
+            formData.append("imagen", inputArchivo);
+
+            fetch("/candidatos/update/img-perfil", {
+                method: "PUT",
+                headers: {
+                    "X-CSRF-TOKEN": token
+                },
+                body: formData
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                if (data.msg === "Foto de perfil actualizada"){
+                    Swal.fire({
+                        title: "Foto de Perfil Actualizada",
+                        text: "Tu foto de perfil se actualizo correctamente",
+                        icon: "success",
+                        confirmButtonText: "Ok"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/home";
+                        }
+                    })
+                } else {
+                    console.log(data)
+                }
+            }).catch((e) => {
+                console.log("Error en actuailizacion de img de perfil");
+                console.log(e.message);
+            })
+        }
+    }
+
+    llenadoFormulario();
 
     function llenadoFormulario() {
         const token = document.querySelector("#csrf").value;
@@ -17,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector("#email").value = data.email;
             document.querySelector("#descripcion").value = data.descripcion !== null ? data.descripcion : "";
         }).catch((e) => {
-            console.log("Error en busqueda de usaurio")
+            // console.log("Error en busqueda de usaurio")
         })
     }
 
@@ -92,6 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
             parrafoError.classList.add("alertas_errores")
             divAlertas.appendChild(parrafoError);
         });
-        setTimeout(() => { divAlertas.innerHTML = ""}, 5000);
+        setTimeout(() => {
+            divAlertas.innerHTML = ""
+        }, 5000);
     }
 });
