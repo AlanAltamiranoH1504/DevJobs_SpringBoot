@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/candidatos")
@@ -108,6 +106,14 @@ public class candidatoController {
             return ResponseEntity.badRequest().body(json);
         }
 
+        //Validacion de extension de archivo
+        String tipoArchivo = archivo.getContentType();
+        List<String>tiposPermitidos = Arrays.asList("image/jpeg", "image/png", "image/jpg");
+        if (!tiposPermitidos.contains(tipoArchivo)){
+            json.put("error", "Solo se permite archivos en formato imagen");
+            return ResponseEntity.badRequest().body(json);
+        }
+
         //Almacenamiento de archivo
         try {
             String carpetaDestino = Paths.get("statics/uploads").toAbsolutePath().toString();
@@ -122,8 +128,9 @@ public class candidatoController {
             String rutaDestinoArchivo = carpetaDestino + "/" + nombreArchivo;
             archivo.transferTo(new File(rutaDestinoArchivo));
 
-            //Actualizacion de atributo imagen en usuario
+            //Actualizacion y eliminacion de atributo imagen en usuario
             Candidato candidato = iCandidatoService.findById(Integer.parseInt(usuario_id));
+            Files.deleteIfExists(Paths.get(directortioDestino + "/" + candidato.getImgPerfil()));
             candidato.setImgPerfil(nombreArchivo);
             iCandidatoService.save(candidato);
 

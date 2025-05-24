@@ -58,7 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     })
                 } else {
-                    console.log(data)
+                    Swal.fire({
+                        title: "Error en actualizacion de imagen de perfil",
+                        text: data.error,
+                        icon: "error",
+                        timer: 4000
+                    });
                 }
             }).catch((e) => {
                 console.log("Error en actuailizacion de img de perfil");

@@ -563,3 +563,7 @@ p.candidatos {
     display: block;
     margin: 0 auto;
 }
+
+.img_perfil_home {
+    width: 30%;
+}
