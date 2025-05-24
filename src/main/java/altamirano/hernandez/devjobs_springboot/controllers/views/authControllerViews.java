@@ -33,4 +33,12 @@ public class authControllerViews {
 
         return "auth/devJobs";
     }
+
+    @GetMapping("/dev-jobs/detalles/vacante/{id}")
+    public String detallesVacanteAreaPublica(Model model){
+        model.addAttribute("nombrePagina", "Conoce la vacante");
+        model.addAttribute("tagline", "Conoce la vacante");
+
+        return "areaPublica/detallesVacante";
+    }
 }

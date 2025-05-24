@@ -29,8 +29,11 @@
 
     <header class="header site-header contenedor separador">
         <h2 th:text="${nombrePagina}"></h2>
-
+        <h3 style="text-align: center" id="mensajeBienvenida"></h3>
         <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
+        <img src="" alt="imagen perfil" id="imgPerfil">
+
+
 
         <a th:if="boton" th:href="@{/vacantes/nueva}" class="btn btn-azul" style="margin-bottom: 10px">Publicar Nueva Vacante</a>
 

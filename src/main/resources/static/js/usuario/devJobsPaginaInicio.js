@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="nombre contrato">${vacante.contrato}</p>
                 </div>
                 <div class="caja centrar-vertical">
-                    <button type="button" id="vacanteInformacion" data-id="${vacante.id}" class="btn btn-verde">Más Info</button>
+<!--                    <button type="button" id="vacanteInformacion" data-id="${vacante.id}" class="btn btn-verde">Más Info</button>-->
+                    <a href="/dev-jobs/detalles/vacante/${vacante.id}" class="btn btn-verde">Más Info</a> 
                 </div>
             `;
             listaVacantes.appendChild(divVacante);

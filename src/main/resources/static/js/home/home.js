@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     //Llamado de funciones
     peticionFindAllVacantes();
 
@@ -22,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then((response) => {
             return response.json();
         }).then((data) =>{
+            const imagenPerfil = document.querySelector("#imgPerfil");
+            imagenPerfil.setAttribute("src", `/uploads/${data.usuario.imgPerfil}`);
+            imagenPerfil.classList.add("img_perfil_home");
+            const mensajeBienvenida = document.querySelector("#mensajeBienvenida");
+            mensajeBienvenida.textContent = `Bienvenido ${data.usuario.nombre}`
+
             if (data.vacantes.length >= 1){
                 renderVacantes(data.vacantes);
             }else {

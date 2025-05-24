@@ -55,6 +55,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/dev-jobs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/vacantes/publica/**").permitAll()
                         .requestMatchers("/logout").permitAll()
 
                         //Rutas que requieren proteccion

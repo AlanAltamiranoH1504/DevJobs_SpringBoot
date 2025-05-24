@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Fuente Rubik de Google Fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+  <!--Hoja CSS-->
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <title th:text='${nombrePagina}'></title>
+</head>
+<body>
+<div class="nombre-sitio contenedor">
+  <h1>
+    <a th:href="@{/}">DevJobs</a>
+  </h1>
+
+  <div th:if="barra" class="buscador">
+    <form method="post" action="#">
+      <input type="text" class="buscar" placeholder="Vacante a buscar">
+      <input type="submit" value="Buscar">
+    </form>
+  </div>
+</div>
+
+<header class="header site-header contenedor separador">
+  <h2 id="titulo" th:text="${nombrePagina}"></h2>
+
+  <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
+</header>
+
+<div class="contenido-superior vacante contenedor">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf" >
+
+  <div class="caja">
+    <p class="etiqueta">Empresa</p>
+    <p class="nombre" id="empresa"></p>
+  </div>
+
+  <div class="caja">
+    <p class="etiqueta">Ubicación</p>
+    <p class="nombre" id="ubicacion"></p>
+  </div>
+  <div class="caja">
+    <p class="etiqueta">Contrato</p>
+    <p class="nombre" id="contrato"></p>
+  </div>
+  <div class="caja">
+    <p class="etiqueta">Salario</p>
+    <p class="nombre" id="salario"></p>
+  </div>
+</div>
+
+<div class="vacante-contenedor contenedor">
+  <main class="contenido">
+    <h2>Descripcion del Puesto</h2>
+    <div class="vacante-descripcion" id="descripcion"></div>
+
+    <div class="contenedor datos-reclutador">
+      <div class="enviar-datos">
+        <h2>Informacion Reclutador</h2>
+        <p id="nombreReclutador"></p>
+        <img src="" id="imgReclutador" alt="imagenReclutador">
+        <p id="descripcionReclutador"></p>
+        <p id="email"></p>
+
+        <div class="enviar-datos">
+          <h2>Contactar Reclutador</h2>
+          <p>Llena el siguiente formulario, sube tu curriculum y pronto te contactaremos</p>
+          <form class="default-form" id="formEnvioCV" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="vacanteId" >
+
+            <div class="campo">
+              <label for="nombreInteresado">Nombre</label>
+              <input type="text" id="nombreInteresado" name="nombreInteresado" required placeholder="Tú nombre">
+            </div>
+            <div class="campo">
+              <label for="email">Email</label>
+              <input type="email" name="emailInteresado" id="emailInteresado" required placeholder="Tu E-mail">
+            </div>
+            <div class="campo">
+              <label for="cv">CV (PDF)</label>
+              <input type="file" name="cv" id="cv">
+            </div>
+            <div class="campo">
+              <input type="submit" class="btn btn-verde" value="Enviar Curriculum">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <aside class="sidebar">
+    <h2>Conocimientos Deseados</h2>
+    <ul class="skills" id="listaDeSkills"></ul>
+  </aside>
+</div>
+<script src="/js/areaPublica/detallesVacante.js"></script>
+<!--Sweet Alert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
