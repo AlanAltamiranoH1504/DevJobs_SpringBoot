@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Interesado {
     private String cv;
 
     //Relacion ManyToMany - Un interesado puede estar postulado a varias vacantes
+    @JsonIgnore
     @ManyToMany(mappedBy = "interesados")
     private List<Vacante> vacantes;
 
