@@ -14,4 +14,7 @@ public interface ICandidatoRepository extends CrudRepository<Candidato, Integer>
 
     @Query("SELECT r.nombre FROM Candidato c JOIN c.roles r WHERE c.id =:id")
     public List<String> permisosByUserId(@Param("id") int id);
+
+    @Query("SELECT c FROM Candidato c WHERE c.token =:token")
+    public Candidato findByToken(@Param("token") String token);
 }

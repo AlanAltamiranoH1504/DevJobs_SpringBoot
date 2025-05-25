@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @Configuration
@@ -53,11 +54,14 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/roles/save").permitAll()
                         .requestMatchers(HttpMethod.GET, "/crear-cuenta").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/dev-jobs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/vacantes/publica/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/vacantes/publica/**").permitAll()
                         .requestMatchers("/logout").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/olvide-password/**").permitAll()
+//                        .requestMatchers(GetMapping, "/olvide-password/")
 
                         //Rutas que requieren proteccion
                         .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")
