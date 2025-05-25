@@ -149,6 +149,37 @@ public class authController {
         return ResponseEntity.ok().body(json);
     }
 
+    @PostMapping("/confirmar-cuenta/{token}")
+    public ResponseEntity<?> confirmarCuenta(@RequestBody Map<String, String> body, @PathVariable String token){
+        Map<String, Object> json = new HashMap<>();
+        String tokenRequestBody = body.get("token");
+
+        //Token no corrupto?
+        if (!token.equals(tokenRequestBody)){
+            json.put("error", "Token de confirmacion corrupto");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(json);
+        }
+
+        //Usuario existente con token?
+        Candidato candidato = iCandidatoRepository.findByToken(token);
+        if (candidato == null){
+            json.put("error", "Usuario no encontrado con token: " + token);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(json);
+        }
+
+        try {
+            //Confirmacion de usuario y borrado de token en db
+            candidato.setToken(null);
+            candidato.setConfirmado(true);
+            iCandidatoService.save(candidato);
+            json.put("msg", "Usuario confirmado correctamente");
+            return ResponseEntity.ok().body(json);
+        } catch (Exception e) {
+            json.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
+        }
+    }
+
     @GetMapping("/findAll")
     public ResponseEntity<?> findAllVacantes() {
         Map<String, Object> json = new HashMap<>();

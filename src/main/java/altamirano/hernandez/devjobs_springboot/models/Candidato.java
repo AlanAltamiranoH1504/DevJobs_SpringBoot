@@ -39,6 +39,8 @@ public class Candidato {
     @Size(max = 500)
     private String token;
 
+    private boolean confirmado;
+
     //Relacion OneToMany - Un candidato para varias vacantes
     @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Vacante> vacanteList = new ArrayList<>();
@@ -54,26 +56,26 @@ public class Candidato {
 
     //Constructores
     public Candidato() {}
-    public Candidato(String nombre, String email, String password, String descripcion, String imgPerfil, String cv, List<Rol> roles, String token) {
+    public Candidato(String nombre, String email, String password, String descripcion, String imgPerfil, String cv, List<Rol> roles, String token, boolean confirmado) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.cv = cv;
-//        this.vacantes = vacantes;
         this.token = token;
+        this.confirmado = confirmado;
         this.roles = roles;
         this.imgPerfil = imgPerfil;
         this.descripcion = descripcion;
 
     }
-    public Candidato(int id, String nombre, String email, String password, String descripcion, String imgPerfil, String cv,  List<Rol> roles, String token) {
+    public Candidato(int id, String nombre, String email, String password, String descripcion, String imgPerfil, String cv,  List<Rol> roles, String token, boolean confirmado) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.cv = cv;
         this.token = token;
-//        this.vacantes = vacantes;
+        this.confirmado = confirmado;
         this.roles = roles;
         this.imgPerfil = imgPerfil;
         this.descripcion = descripcion;
@@ -136,6 +138,14 @@ public class Candidato {
         this.token = token;
     }
 
+    public boolean isConfirmado() {
+        return confirmado;
+    }
+
+    public void setConfirmado(boolean confirmado) {
+        this.confirmado = confirmado;
+    }
+
     public String getImgPerfil() {
         return imgPerfil;
     }
@@ -155,14 +165,13 @@ public class Candidato {
     //Equals y Hashcode
     @Override
     public boolean equals(Object o) {
-
         if (o == null || getClass() != o.getClass()) return false;
         Candidato candidato = (Candidato) o;
-        return id == candidato.id && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(password, candidato.password) && Objects.equals(descripcion, candidato.descripcion) && Objects.equals(imgPerfil, candidato.imgPerfil) && Objects.equals(cv, candidato.cv) && Objects.equals(token, candidato.token) && Objects.equals(vacanteList, candidato.vacanteList) && Objects.equals(roles, candidato.roles);
+        return id == candidato.id && confirmado == candidato.confirmado && Objects.equals(nombre, candidato.nombre) && Objects.equals(email, candidato.email) && Objects.equals(password, candidato.password) && Objects.equals(descripcion, candidato.descripcion) && Objects.equals(imgPerfil, candidato.imgPerfil) && Objects.equals(cv, candidato.cv) && Objects.equals(token, candidato.token) && Objects.equals(vacanteList, candidato.vacanteList) && Objects.equals(roles, candidato.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, email, password, descripcion, imgPerfil, cv, token, vacanteList, roles);
+        return Objects.hash(id, nombre, email, password, descripcion, imgPerfil, cv, token, confirmado, vacanteList, roles);
     }
 }

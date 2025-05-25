@@ -26,7 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }).then((response) => {
                 return response.json();
             }).then((data) => {
-                console.log(data)
+                Swal.fire({
+                    title: "¡Password Actualizada!",
+                    text: "Password actualizada, inicia sesion y registra nuevas vacantes",
+                    icon: "success",
+                    confirmButtonText: "Aceptar"
+                }).then((result) => {
+                    if (result.isConfirmed){
+                        window.location.href = "/dev-jobs"
+                    }
+                });
             }).catch((e) => {
                 console.log(e.message);
             });

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+<div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <h2 style="color: #333333;">Hola <span th:text="${nombre}">Usuario</span>,</h2>
+
+  <p style="font-size: 16px; color: #555555;">
+    Confirma tu cuenta en <strong>DevJobs</strong> y comienza a publicar tus vacantes de manera gratis.
+  </p>
+
+  <p style="font-size: 16px; color: #555555;">
+    Haz clic en el siguiente botón para confirmar tu cuenta:
+  </p>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <a th:href="${url}" style="background-color: #007bff; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+      Confirmar Cuenta
+    </a>
+  </div>
+
+  <p style="font-size: 14px; color: #999999;">
+    Si tú no realizaste este registro, puedes ignorar este mensaje.
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #eeeeee; margin: 40px 0;">
+
+  <p style="font-size: 12px; color: #bbbbbb; text-align: center;">
+    © <span th:text="${anio}">2025</span> DevJobs. Todos los derechos reservados.
+  </p>
+</div>
+</body>
+</html>

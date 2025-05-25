@@ -61,7 +61,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/vacantes/publica/**").permitAll()
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers(HttpMethod.GET, "/olvide-password/**").permitAll()
-//                        .requestMatchers(GetMapping, "/olvide-password/")
+                        .requestMatchers(HttpMethod.GET, "/confirmacion/**").permitAll()
 
                         //Rutas que requieren proteccion
                         .requestMatchers(HttpMethod.GET, "/home/**").hasRole("USER")

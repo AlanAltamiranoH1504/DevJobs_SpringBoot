@@ -1,7 +1,9 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
+import altamirano.hernandez.devjobs_springboot.helpers.EnvioEmails;
 import altamirano.hernandez.devjobs_springboot.helpers.GeneradorIDUnicos;
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
+import altamirano.hernandez.devjobs_springboot.models.DTO.Email;
 import altamirano.hernandez.devjobs_springboot.models.DTO.UsuarioDTO;
 import altamirano.hernandez.devjobs_springboot.models.Rol;
 import altamirano.hernandez.devjobs_springboot.repositories.IRolRepository;
@@ -33,6 +35,8 @@ public class candidatoController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private GeneradorIDUnicos generadorIDUnicos;
+    @Autowired
+    private EnvioEmails envioEmails;
 
     @PostMapping("/save")
     public ResponseEntity<?> saveCandidato(@Valid @RequestBody Candidato candidato, BindingResult bindingResult) {
@@ -49,8 +53,10 @@ public class candidatoController {
             rolsDefaults.add(rolUserDefault);
 
             candidato.setPassword(passwordEncoder.encode(candidato.getPassword()));
+            candidato.setToken(generadorIDUnicos.generadorIdUnico());
             candidato.setRoles(rolsDefaults);
             iCandidatoService.save(candidato);
+            envioEmails.emailConfirmacionCuenta(candidato.getEmail(), "Confirmacion de Cuenta en DevJobs", candidato.getNombre(), candidato.getToken());
             json.put("msg", "Candidato guardado correctamente");
             return ResponseEntity.status(HttpStatus.CREATED).body(json);
         }
