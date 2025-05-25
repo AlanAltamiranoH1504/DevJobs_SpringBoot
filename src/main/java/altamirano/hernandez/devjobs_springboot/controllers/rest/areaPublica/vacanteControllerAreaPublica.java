@@ -1,5 +1,7 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest.areaPublica;
 
+import altamirano.hernandez.devjobs_springboot.helpers.GeneradorIDUnicos;
+import altamirano.hernandez.devjobs_springboot.helpers.StorageCV_PDF;
 import altamirano.hernandez.devjobs_springboot.models.Interesado;
 import altamirano.hernandez.devjobs_springboot.models.Vacante;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.IInteresadoService;
@@ -11,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.expression.Arrays;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/vacantes/publica")
@@ -24,6 +23,10 @@ public class vacanteControllerAreaPublica {
     private IVacanteService iVacanteService;
     @Autowired
     private IInteresadoService interesadoService;
+    @Autowired
+    private StorageCV_PDF storageCVPdf;
+    @Autowired
+    private GeneradorIDUnicos generadorIDUnicos;
 
     @GetMapping("/prueba")
     public ResponseEntity<?> prueba() {
@@ -56,20 +59,29 @@ public class vacanteControllerAreaPublica {
             @RequestParam("emailInteresado") String emailInteresado) {
         Map<String, Object> json = new HashMap<>();
 
-        //Objeto Interesado
-        Interesado interesado = new Interesado(nombreInteresado, emailInteresado,"Sin cv");
-        interesadoService.save(interesado);
+        try {
+            //Almacenamiento archivo
+            String nombreArchivo = generadorIDUnicos.generadorIdUnico() + "_" + cv.getOriginalFilename();
+            Map<String, Object> resultadoAlmacenamientoPDF = storageCVPdf.almacenarPDF(nombreArchivo, cv);
 
-        //Busqueda de vacante y seteo de interesado
-        Vacante vacante = iVacanteService.findById(Integer.parseInt(vacanteId));
-        List<Interesado> interesados = new ArrayList<>();
-        interesados.add(interesado);
-        vacante.setInteresados(interesados);
-        iVacanteService.save(vacante);
+            //Entidad Interesado
+            Interesado interesado = new Interesado(nombreInteresado, emailInteresado, nombreArchivo);
+            interesadoService.save(interesado);
 
-        //Respuesta de proceso
-        json.put("interesado", "interesado guardado en la vacante");
+            //Busqueda de vacante y seteo de interesado en vacante
+            Vacante vacante = iVacanteService.findById(Integer.parseInt(vacanteId));
+            List<Interesado> interesados = new ArrayList<>();
+            interesados.add(interesado);
+            vacante.setInteresados(interesados);
+            iVacanteService.save(vacante);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(json);
+            json.put("msg", "Postulacion Correcta");
+            json.put("almacenamiento", resultadoAlmacenamientoPDF);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(json);
+        } catch (Exception e) {
+            json.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
+        }
     }
 }

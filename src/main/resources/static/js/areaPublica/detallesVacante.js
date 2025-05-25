@@ -55,12 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function llenadoInformacionReclutador(reclutador) {
         const {nombre, email, descripcion, imgPerfil} = reclutador;
 
-        document.querySelector("#nombreReclutador").textContent = nombre;
+        document.querySelector("#nombreReclutador").textContent = `Nombre: ${nombre}`;
         const imagenPerfil = document.querySelector("#imgReclutador");
         imagenPerfil.setAttribute("src", `/uploads/${imgPerfil}`);
         imagenPerfil.style.width = "70%"
-        document.querySelector("#descripcionReclutador").textContent = descripcion;
-        document.querySelector("#email").textContent = email
+        document.querySelector("#descripcionReclutador").textContent = `Descripción: ${descripcion !== null ? descripcion : "Sin descripción"}`;
+        document.querySelector("#email").textContent = `E-Mail de Contacto: ${email}`
     }
 
     function peticionEnvioCV(e){
@@ -87,10 +87,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data)
+            if (data.msg) {
+                Swal.fire({
+                    title: data.msg,
+                    text: "Espera la respuesta del reclutado para continuar el proceso",
+                    icon: "success",
+                    textConfirmButton: "Aceptar"
+                }).then((result) => {
+                    if (result.isConfirmed){
+                        window.location.href = "/dev-jobs";
+                    }
+                });
+            }
         }).catch((e) => {
-            console.log("Error en el envio de interesado")
+            Swal.fire({
+                title: "¡Error!",
+                text: "Error en postulacion a la vacante",
+                icon: "error",
+                textConfirmButton: "Aceptar"
+            }).then((result) => {
+                if (result.isConfirmed){
+                    window.location.href = "/dev-jobs";
+                }
+            });
         })
-
     }
 })
