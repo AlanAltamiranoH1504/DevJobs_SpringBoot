@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.security;
 
+import altamirano.hernandez.devjobs_springboot.helpers.EnvioEmails;
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
 import altamirano.hernandez.devjobs_springboot.models.Rol;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
@@ -19,13 +20,16 @@ import java.util.List;
 public class ImplUserDetailsService implements UserDetailsService {
     @Autowired
     private ICandidatoService iCandidatoService;
+    @Autowired
+    private EnvioEmails envioEmails;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //Busqueda del usuario
         Candidato candidato = iCandidatoService.findByEmail(email);
         if (candidato == null) {
-            throw new UsernameNotFoundException("Candidato con email: " + email + " no encontrado");
+            envioEmails.emailConfirmacionCuenta(candidato.getEmail(), "Confirmación de Cuenta", candidato.getNombre(), candidato.getToken());
+            throw new UsernameNotFoundException("Candidato con email: " + email + " no encontrado o no confirmado");
         }
 
         //Configuracion de permisos de usaurio

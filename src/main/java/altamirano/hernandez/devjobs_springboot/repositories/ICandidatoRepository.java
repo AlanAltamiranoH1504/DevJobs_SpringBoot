@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ICandidatoRepository extends CrudRepository<Candidato, Integer> {
 
-    @Query("SELECT c FROM Candidato c WHERE c.email =:email")
+    @Query("SELECT c FROM Candidato c WHERE c.email =:email AND c.confirmado =true ")
     public Candidato findByEmail(@Param("email") String email);
 
     @Query("SELECT r.nombre FROM Candidato c JOIN c.roles r WHERE c.id =:id")

@@ -20,7 +20,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data)
+            if (data.msg === "Usuario confirmado correctamente"){
+                Swal.fire({
+                    title: "Cuenta Confirmada Correctamente",
+                    text: "Haz confirmado correctamente tu cuenta, puedes empezar a publicar tus vacantes",
+                    icon: "success",
+                    confirmButtonText: "Aceptar"
+                }).then((result) => {
+                    if (result.isConfirmed){
+                        window.location.href = "/"
+                    }
+                });
+            }
         }).catch((e) => {
             console.log(e.message)
         })

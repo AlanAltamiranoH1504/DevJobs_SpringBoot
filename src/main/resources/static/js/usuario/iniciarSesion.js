@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else{
                 Swal.fire({
                     title: "¡Error en Inicio de Sesión!",
-                    text: data.message,
+                    text: "Credenciales erroneas o cuenta no confirmada. Verifica tu E-Mail",
                     icon: "error",
                     timer: 3000
                 });
