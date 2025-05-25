@@ -19,13 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
             text: `No existe una vacante con id: ${id}`,
             icon: "error",
             timer: 5000,
-            textConfirmButton: "ok"
+            textConfirmButton: "Ok"
         });
         console.log(error.message);
     });
     function renderDetallesVacante(info){
         document.querySelector("#editarVacante").setAttribute("data-id", info.id);
         document.querySelector("#eliminarVacante").setAttribute("data-id", info.id);
+        document.querySelector("#interesadosVacante").setAttribute("data-id", info.id);
         document.querySelector("#titulo").textContent = info.titulo;
         document.querySelector("#empresa").textContent = info.empresa;
         document.querySelector("#ubicacion").textContent = info.ubicacion;
@@ -62,6 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "eliminarVacante":
                 eliminacionVacante(idEntidad);
+                break;
+            case "interesadosVacante":
+                window.location.href = `/vacantes/interesados/${idEntidad}`
                 break;
         }
     }

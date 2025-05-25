@@ -35,45 +35,10 @@
     <p class="tagline" th:if="tagline" th:text="${tagline}"></p>
 </header>
 
-<div class="contenido-superior vacante contenedor">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf" >
-
-    <div class="caja">
-        <p class="etiqueta">Empresa</p>
-        <p class="nombre" id="empresa"></p>
-    </div>
-
-    <div class="caja">
-        <p class="etiqueta">Ubicación</p>
-        <p class="nombre" id="ubicacion"></p>
-    </div>
-    <div class="caja">
-        <p class="etiqueta">Contrato</p>
-        <p class="nombre" id="contrato"></p>
-    </div>
-    <div class="caja">
-        <p class="etiqueta">Salario</p>
-        <p class="nombre" id="salario"></p>
-    </div>
-</div>
-
-<div class="vacante-contenedor contenedor">
-    <main class="contenido">
-        <h2>Descripcion del Puesto</h2>
-        <div class="vacante-descripcion" id="descripcion"></div>
-
-        <div id="seccionBtns">
-            <button type="button" id="editarVacante"  class="btn btn-azul editar-btn" style="margin-bottom: 15px">Editar Vacante</button>
-            <button type="button" id="interesadosVacante" class="btn btn-verde" style="text-decoration: none; margin-bottom: 15px">Ver Interesados</button>
-            <button type="button" id="eliminarVacante" class="btn btn-rojo">Eliminar Vacante</button>
-        </div>
-    </main>
-    <aside class="sidebar">
-        <h2>Conocimientos Deseados</h2>
-        <ul class="skills" id="listaDeSkills"></ul>
-    </aside>
-</div>
-<script src="/js/vacantes/detallesVacante.js"></script>
+<main class="lista-candidatos" id="listaCandidatos">
+    <h2>Lista de Candidatos</h2>
+</main>
+<script src="/js/vacantes/interesadosVacante.js"></script>
 <!--Sweet Alert-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

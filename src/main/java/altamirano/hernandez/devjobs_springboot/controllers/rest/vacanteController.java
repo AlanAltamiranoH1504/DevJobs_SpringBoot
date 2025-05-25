@@ -1,6 +1,7 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
+import altamirano.hernandez.devjobs_springboot.models.Interesado;
 import altamirano.hernandez.devjobs_springboot.models.Vacante;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteService;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -95,6 +97,26 @@ public class vacanteController {
             return ResponseEntity.status(HttpStatus.OK).body(json);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getInteresados/{id}")
+    public ResponseEntity<?> geteInteresados(@CookieValue(name = "usuario_id")String usuario_id, @PathVariable int id){
+        Map<String, Object> json = new HashMap<>();
+
+        //Busqueda de dueño de la vacante
+        Vacante vacante = iVacanteService.findById(id);
+        if (vacante.getCandidato().getId() != Integer.parseInt(usuario_id)) {
+            json.put("msg", "Acceso no autorizado para esa vacante");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(json);
+        }
+
+        try {
+            List<Interesado> interesadosEnVacante = iVacanteService.getAllInteresados(id);
+            return ResponseEntity.status(HttpStatus.OK).body(interesadosEnVacante);
+        } catch (Exception e) {
+            json.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
         }
     }
 }

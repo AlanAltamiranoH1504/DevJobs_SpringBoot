@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             divVacante.innerHTML = `
                 <div class="caja">
                     <h3>${vacante.titulo}</h3>
+                    <p class="nombre">${vacante.empresa}</p>
                 </div>
                 <div class="caja">
                     <p class="etiqueta">Ubicación</p>

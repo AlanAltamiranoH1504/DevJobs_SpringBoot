@@ -1,5 +1,6 @@
 package altamirano.hernandez.devjobs_springboot.services;
 
+import altamirano.hernandez.devjobs_springboot.models.Interesado;
 import altamirano.hernandez.devjobs_springboot.models.Vacante;
 import altamirano.hernandez.devjobs_springboot.repositories.IVacanteRepository;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteService;
@@ -27,9 +28,19 @@ public class ImplVacanteService implements IVacanteService {
 
     @Override
     public Vacante findById(int id) {
-        try{
+        try {
             Vacante vacante = iVacanteRepository.findById(id).get();
             return vacante;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Interesado> getAllInteresados(int id) {
+        try {
+            List<Interesado> interesados = iVacanteRepository.getAllInteresados(id);
+            return interesados;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -48,11 +59,13 @@ public class ImplVacanteService implements IVacanteService {
     public void deleteById(int id) {
         try {
             Vacante vacanteDelete = iVacanteRepository.findById(id).get();
-            if (vacanteDelete != null){
+            if (vacanteDelete != null) {
                 iVacanteRepository.delete(vacanteDelete);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }

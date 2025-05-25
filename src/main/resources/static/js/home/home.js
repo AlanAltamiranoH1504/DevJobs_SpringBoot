@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="caja">
                     <h3>${vacante.empresa}</h3>
                     <p class="puesto">${vacante.titulo}</p>
+                    <p class="puesto">Numero de Solicitudes: ${vacante.interesados.length}</p>
                 </div>
                 <div class="caja">
                     <p class="etiqueta">Ubicación</p>

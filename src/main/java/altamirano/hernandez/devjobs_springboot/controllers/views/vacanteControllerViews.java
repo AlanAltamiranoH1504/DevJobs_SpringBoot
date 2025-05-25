@@ -31,4 +31,12 @@ public class vacanteControllerViews {
         model.addAttribute("tagline", "Edita tu vacante");
         return "vacantes/formEditarVacante";
     }
+
+    @GetMapping("/interesados/{id}")
+    public String interesadosVacante(Model model, @PathVariable int id){
+        model.addAttribute("nombrePagina", "Interesados de Vacante");
+        model.addAttribute("tagline", "Consulta los postulantes a la vacante y contactalos");
+
+        return "vacantes/interesadosVacante";
+    }
 }
