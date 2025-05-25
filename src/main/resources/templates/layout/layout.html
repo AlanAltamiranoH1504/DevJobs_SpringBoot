@@ -20,8 +20,9 @@
         </h1>
 
         <div th:if="barra" class="buscador">
-            <form method="post" action="#">
-                <input type="text" class="buscar" placeholder="Vacante a buscar">
+            <form method="post" action="#" id="formBuscador">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="text" class="buscar" id="buscador" placeholder="Vacante a buscar">
                 <input type="submit" value="Buscar">
             </form>
         </div>
