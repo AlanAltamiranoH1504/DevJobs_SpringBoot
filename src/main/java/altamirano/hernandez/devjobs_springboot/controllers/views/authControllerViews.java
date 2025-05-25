@@ -4,6 +4,8 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -16,6 +18,14 @@ public class authControllerViews {
         model.addAttribute("tagline", "Comienza a Publicar tus Vacantes Gratis, Solo Debes Crear Una Cuenta");
 
         return "auth/formularioRegistroUsuarios";
+    }
+
+    @GetMapping("/olvide-password")
+    public String formOlvidePassword(Model model){
+        model.addAttribute("nombrePagina", "Reestablecer Password");
+        model.addAttribute("tagline", "Rucupera tu cuenta y comienza a publicar tus vacantes de manera gratis");
+
+        return "auth/formOlvidePassword";
     }
 
     @GetMapping("/")
@@ -40,5 +50,13 @@ public class authControllerViews {
         model.addAttribute("tagline", "Conoce la vacante");
 
         return "areaPublica/detallesVacante";
+    }
+
+    @GetMapping("/olvide-password/{token}")
+    public String formRecuperarPassword(@PathVariable String token, Model model){
+        model.addAttribute("nombrePagina", "Recupera tu Password");
+        model.addAttribute("tagline", "Ingresa tu nueva password y recupera tu cuenta de DevJobs");
+
+        return "auth/formNuevaPassword";
     }
 }

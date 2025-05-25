@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }else {
             candidatos.forEach((candidato) => {
                 const divCandidato = document.createElement("div");
-                divCandidato.classList.add("candidato");
+                divCandidato.classList.add("vacante", "panel-administracion");
                 divCandidato.innerHTML = `
                     <div class="caja">
                         <p class="etiqueta">Nombre</p>
@@ -49,13 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="etiqueta">E-Mail</p>
                         <p class="nombre">${candidato.email}</p>
                     </div>
-                    <div class="caja">
-                        <p class="etiqueta">Ver CV</p>
-                        <a href="/uploads/cvs_interesados/${candidato.cv}" class="btn btn-azul">Curriculum</a>
-                    </div>
-                    <div class="caja">
-                        <p class="etiqueta">Enviar E-Mail</p>
-                        <button type="button" data-email="${candidato.email}" class="btn btn-verde">Contactar</button>
+                    <div class="caja" ">
+                        <p class="etiqueta" style="text-align: center">Opciones</p>
+                        <a href="/uploads/cvs_interesados/${candidato.cv}" class="btn btn-azul" style="margin-bottom: 10px">Ver CV</a>
+                        <a href="#" data-id="${candidato.email}" class="btn btn-verde">Contactar</a>
                     </div>
                 `;
                 listaCandidatos.appendChild(divCandidato);

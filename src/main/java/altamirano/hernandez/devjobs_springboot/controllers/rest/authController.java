@@ -1,8 +1,12 @@
 package altamirano.hernandez.devjobs_springboot.controllers.rest;
 
+import altamirano.hernandez.devjobs_springboot.helpers.EnvioEmails;
+import altamirano.hernandez.devjobs_springboot.helpers.GeneradorIDUnicos;
 import altamirano.hernandez.devjobs_springboot.models.Candidato;
+import altamirano.hernandez.devjobs_springboot.models.DTO.Email;
 import altamirano.hernandez.devjobs_springboot.models.Login;
 import altamirano.hernandez.devjobs_springboot.models.Vacante;
+import altamirano.hernandez.devjobs_springboot.repositories.ICandidatoRepository;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.ICandidatoService;
 import altamirano.hernandez.devjobs_springboot.services.interfaces.IVacanteService;
 import jakarta.servlet.http.Cookie;
@@ -20,7 +24,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +44,15 @@ public class authController {
     @Autowired
     private ICandidatoService iCandidatoService;
     @Autowired
+    private ICandidatoRepository iCandidatoRepository;
+    @Autowired
     private IVacanteService iVacanteService;
+    @Autowired
+    private EnvioEmails envioEmails;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private GeneradorIDUnicos generadorIDUnicos;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody Login login, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
@@ -83,10 +97,62 @@ public class authController {
         }
     }
 
-    @GetMapping("/findAll")
-    public ResponseEntity<?> findAllVacantes(){
+    @PostMapping("/olvide-password")
+    public ResponseEntity<?> olvidePassword(@Valid @RequestBody Email email, BindingResult bindingResult) {
         Map<String, Object> json = new HashMap<>();
-        try{
+
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> errores = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errores.put(error.getField(), error.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errores);
+        } else {
+            //Busqueda de usuario con ese email
+            Candidato candidato = iCandidatoService.findByEmail(email.getDestinatario());
+            if (candidato == null) {
+                json.put("msg", "Usuario no encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(json);
+            }
+
+            try {
+                String tokenURLRecuperacion = generadorIDUnicos.generadorIdUnico();
+                candidato.setToken(tokenURLRecuperacion);
+                iCandidatoService.save(candidato);
+
+                envioEmails.emailRecuperacionPassword(candidato.getEmail(), "Recuperacion Password", candidato.getNombre(), tokenURLRecuperacion);
+                json.put("msg", "Verifica tu correo para recuperacion de password");
+                return ResponseEntity.ok().body(json);
+            } catch (Exception e) {
+                json.put("error", e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(json);
+            }
+        }
+    }
+
+    @PostMapping("/confirmar-nueva-password")
+    public ResponseEntity<?> confirmarNuevaPassword(@RequestBody Map<String, String> body){
+        Map<String, Object> json = new HashMap<>();
+        String password = body.get("password");
+        String token = body.get("token");
+
+        Candidato candidato = iCandidatoRepository.findByToken(token);
+        if (candidato == null) {
+            json.put("msg", "El usuario no ha solicitado recuperacion de password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(json);
+        }
+
+        candidato.setPassword(passwordEncoder.encode(password));
+        candidato.setToken(null);
+        iCandidatoService.save(candidato);
+        json.put("msg", "Actualizacion correcta de contraseña para usuario: " + candidato.getEmail());
+        return ResponseEntity.ok().body(json);
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAllVacantes() {
+        Map<String, Object> json = new HashMap<>();
+        try {
             List<Vacante> vacantes = iVacanteService.findAllVacantes();
             return ResponseEntity.status(HttpStatus.OK).body(vacantes);
         } catch (Exception e) {
