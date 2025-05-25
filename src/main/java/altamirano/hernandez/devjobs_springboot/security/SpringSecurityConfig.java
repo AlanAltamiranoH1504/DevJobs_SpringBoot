@@ -64,6 +64,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/home/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/vacante/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/vacante/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/vacantes/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/usuario/**").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/candidatos/update").hasRole("USER")
 

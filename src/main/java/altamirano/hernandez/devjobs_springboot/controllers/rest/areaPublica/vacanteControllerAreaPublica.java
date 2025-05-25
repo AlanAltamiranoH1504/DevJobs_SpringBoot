@@ -70,9 +70,9 @@ public class vacanteControllerAreaPublica {
 
             //Busqueda de vacante y seteo de interesado en vacante
             Vacante vacante = iVacanteService.findById(Integer.parseInt(vacanteId));
-            List<Interesado> interesados = new ArrayList<>();
-            interesados.add(interesado);
-            vacante.setInteresados(interesados);
+            List<Interesado> interesadoPreGuardados = vacante.getInteresados();
+            interesadoPreGuardados.add(interesado);
+            vacante.setInteresados(interesadoPreGuardados);
             iVacanteService.save(vacante);
 
             json.put("msg", "Postulacion Correcta");
